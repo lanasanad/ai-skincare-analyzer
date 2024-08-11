@@ -1,113 +1,331 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import React, { useState } from "react";
+
+import {
+  TextField,
+  Box,
+  Autocomplete,
+  Button,
+  Typography,
+  Container,
+  CircularProgress,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  createTheme,
+  Rating,
+  ThemeProvider,
+} from "@mui/material";
+//import "./App.css";
+import StarIcon from "@mui/icons-material/Star";
+import backgroundImage from "./assets/spill1.jpg";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#D8BFD8",
+      dark: "#C8A2C8",
+    },
+  },
+});
+
+function App() {
+  const [productType, setProductType] = useState<string | null>(null);
+  const [ingredients, setIngredients] = useState<string>("");
+  const [skinConcerns, setSkinConcerns] = useState<string>("");
+  const [response, setResponse] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [rating, setRating] = useState<number | null>(null);
+
+  const productTypes = [
+    "Cleanser",
+    "Cleansing Balm",
+    "Cleansing Oil",
+    "Cream Cleanser",
+    "Face Wash",
+    "Foaming Cleanser",
+    "Gel Cleanser",
+    "Oil Cleanser",
+    "Chemical Exfoliator",
+    "Peel",
+    "Physical Exfoliator / Scrub",
+    "Charcoal Mask",
+    "Clay Mask",
+    "Detox Mask",
+    "Mask",
+    "Mud Mask",
+    "Sheet Mask",
+    "Sleeping Mask",
+    "Under eye Mask",
+    "Face Mist",
+    "Day Cream",
+    "Eye Cream",
+    "Face Cream",
+    "Gel cream",
+    "Hand Cream",
+    "Intensive Moisturizer",
+    "Lip Balm",
+    "Lip Mask",
+    "Lip Oil",
+    "Lip Scrub",
+    "Face Moisturizer",
+    "Night Cream",
+    "Tinted Moisturizer",
+    "Face Oil",
+    "Squalane",
+    "AHA (Alpha Hydroxy Acid) Serum",
+    "Antioxidant Serum",
+    "Azelaic Acid",
+    "BHA (Beta Hydroxy Acid) Serum",
+    "Brightening Serum",
+    "Collagen Serum",
+    "Cooling Gel",
+    "Glycolic Acid",
+    "Hyaluronic Acid Serum",
+    "Niacinamide Serum",
+    "Peptide Serum",
+    "PHA (Polyhydroxy Acid) Serum",
+    "Probiotic Serum",
+    "Quercetin Serum",
+    "Retinol",
+    "Rosehip Oil",
+    "Serum",
+    "Vitamin C Serum",
+    "Vitamin E Oil",
+    "Sunscreen",
+    "Acne Spot Treatment",
+    "Pore Minimizer",
+    "Spot Treatment",
+    "Body Butter",
+    "Body Lotion",
+    "Body Oil",
+    "Body Scrub",
+    "Body Moisturizer",
+    "Calamine Lotion",
+    "Makeup Remover",
+    "Micellar Water",
+    "Face Balm",
+    "Toner",
+    "Witch Hazel Toner",
+  ];
+
+  async function callBackendAPI() {
+    setIsLoading(true);
+
+    try {
+      const apiResponse = await fetch("http://localhost:5000/api/analyze", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ productType, ingredients, skinConcerns }),
+      });
+
+      if (!apiResponse.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await apiResponse.json();
+      setResponse(data.response);
+      setRating(data.rating); // rating from the API response
+    } catch (error) {
+      console.error("Error:", error);
+      setResponse("An error occurred while analyzing.");
+    } finally {
+      setIsLoading(false);
+      setIsModalOpen(true);
+    }
+  }
+
+  function handleRefresh() {
+    setProductType(null);
+    setIngredients("");
+    setSkinConcerns("");
+    setResponse("");
+    setRating(null);
+    setIsModalOpen(false);
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    /*<div
+      style={{
+        background: `url(${backgroundImage}) repeat-x center center fixed`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        width: "100vw",
+        minHeight: "100vh",
+        overflow: "hidden",
+      }}
+    >*/
+      <ThemeProvider theme={theme}>
+        <div>
+          <Typography
+            marginTop="77px"
+            className="red-hat-display"
+            gutterBottom
+            fontSize="650%"
+            sx={{
+              fontWeight: "600",
+              display: "flex",
+              justifyContent: "center",
+              textAlign: "center",
+              letterSpacing: '19px', // Adjust the gap between letters
+              wordSpacing: '20px',  // Adjust the gap between words
+            }}
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            GLOW AI
+          </Typography>
+          <Container>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: 2,
+                  marginBottom: 2,
+                }}
+              >
+                <Autocomplete
+                  value={productType}
+                  onChange={(event, newValue) => setProductType(newValue)}
+                  onInputChange={(event, newInputValue) =>
+                    setProductType(newInputValue)
+                  }
+                  options={productTypes}
+                  sx={{
+                    width: "390px",
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": { borderWidth: "3px" },
+                      "&:hover fieldset": { borderWidth: "3px" },
+                      "&.Mui-focused fieldset": { borderWidth: "3px" },
+                    },
+                    margin: "normal",
+                  }}
+                  freeSolo
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Product Type"
+                      variant="outlined"
+                      margin="normal"
+                    />
+                  )}
+                />
+                <TextField
+                  fullWidth
+                  label="Skin Concerns"
+                  variant="outlined"
+                  margin="normal"
+                  sx={{
+                    width: "390px",
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": { borderWidth: "3px" },
+                      "&:hover fieldset": { borderWidth: "3px" },
+                      "&.Mui-focused fieldset": { borderWidth: "3px" },
+                    },
+                  }}
+                  value={skinConcerns}
+                  onChange={(e) => setSkinConcerns(e.target.value)}
+                />
+              </Box>
+              <TextField
+                fullWidth
+                multiline
+                minRows={7}
+                label="Ingredients"
+                variant="outlined"
+                margin="normal"
+                sx={{
+                  width: "800px",
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": { borderWidth: "3px" },
+                    "&:hover fieldset": { borderWidth: "3px" },
+                    "&.Mui-focused fieldset": { borderWidth: "3px" },
+                  },
+                }}
+                value={ingredients}
+                onChange={(e) => setIngredients(e.target.value)}
+              />
+              <Button
+                variant="contained"
+                sx={{
+                  height: "70px",
+                  fontSize: "26px",
+                  padding: "4px 8px",
+                  mt: 10,
+                  width: "300px",
+                  textTransform: "lowercase",
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": { borderWidth: "2px" },
+                    "&:hover fieldset": { borderWidth: "2px" },
+                    "&.Mui-focused fieldset": { borderWidth: "2px" },
+                  },
+                }}
+                onClick={callBackendAPI}
+                disabled={isLoading}
+                className="analyze-button"
+              >
+                {isLoading ? (
+                  <CircularProgress size={24} color="inherit" />
+                ) : (
+                  "analyze"
+                )}
+              </Button>
+            </Box>
+          </Container>
         </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+        <Dialog
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          classes={{ paper: "custom-dialog" }}
         >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+          <DialogTitle className="custom-dialog-title">
+            Analysis Result
+          </DialogTitle>
+          <DialogContent className="custom-dialog-content">
+            <Typography>{response}</Typography>
+            <Rating
+              name="product-rating"
+              value={rating}
+              max={5}
+              readOnly
+              precision={0.5}
+              size="large"
+              icon={
+                <StarIcon style={{ color: "#f1c60877", fontSize: "4rem" }} />
+              }
+              emptyIcon={
+                <StarIcon style={{ color: "#f1c608", fontSize: "4rem" }} />
+              }
+              sx={{
+                "& .MuiRating-iconEmpty": {
+                  color: "#C8A2C8",
+                },
+                "& .MuiRating-iconFilled": {
+                  color: "#DACDDA",
+                },
+                direction: "rtl",
+              }}
+            />
+          </DialogContent>
+          <DialogActions className="custom-dialog-actions">
+            <Button onClick={() => setIsModalOpen(false)} color="primary">
+              Close
+            </Button>
+            <Button onClick={handleRefresh}>Refresh</Button>
+          </DialogActions>
+        </Dialog>
+      </ThemeProvider>
   );
 }
+
+export default App;
