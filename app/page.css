@@ -2,32 +2,3 @@
   background-color: #ceb3ce;
 }
   
-  .josefin-sans {
-    color:#ffffff;
-    font-family: "Josefin Sans", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
-  }
-  .red-hat-display {
-    color:#ffffff;
-    font-family: 'Red Hat Display', sans-serif;
-    text-shadow: 0 0 10px #ffffff, 0 0 20px #eeebeb, 0 0 30px #e1dede, 0 0 40px #e0dddd, 0 0 50px #d3d1d1, 0 0 60px #d6d4d4;
-  }
-  
-  
-   /*   text-shadow: 0 0 10px #dcd8d8, 0 0 20px #f1ecec, 0 0 30px #e6e4ea, 0 0 40px #d0cdd4, 0 0 50px #c3bfc9, 0 0 60px rgb(198, 194, 201), 0 0 70px #c6c1ca;
-  */
-  
-  
-  .analyze-button {
-    background-color: #ceb3ce !important; /* Light purple */
-    color: black !important; /* Assuming you want black text */
-    transition: background-color 0.3s ease !important;
-  }
-  
-  .analyze-button:hover {
-    background-color: #b188b1 !important; /* Darker purple */
-  }
-  
-  
-  
