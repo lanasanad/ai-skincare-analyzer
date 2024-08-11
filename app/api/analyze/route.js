@@ -14,7 +14,7 @@ export async function POST(request) {
       messages: [
         {
           role: "system",
-          content: "You will be provided with the ingredient of a skincare product, face or body, and the product type, and the skin concerns it aims to address. Provide short points about 3 of the highlight ingredients. Say what number of 5 you would recommend it, the most being 5 stars. Just say the number you would give it, not the entire rating out of 5. Don't exceed 50 words. I want each ingredient point to start off like this: INGREDIENT - explanation. Each ingredient must be in a NEW line with space in between each ingredient."
+          content: "You will be provided with the ingredient of a skincare product, the product type, and the skin concerns it aims to address. If there are more than 3 ingredients provided, respond in short points about 3 of the highlight ingredients. Don’t exceed 15 words per point. Then,give a final analysis, and Say what rating out of 5 you would give it.",
         },
         {
           role: "user",

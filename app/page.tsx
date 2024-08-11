@@ -5,7 +5,7 @@ import {
   TextField,
   Box,
   Autocomplete,
-  ThemeProvider,
+  Button,
   Typography,
   Container,
   CircularProgress,
@@ -14,8 +14,8 @@ import {
   DialogContent,
   DialogActions,
   createTheme,
-  Button,
   Rating,
+  ThemeProvider,
 } from "@mui/material";
 import "./page.css";
 import StarIcon from "@mui/icons-material/Star";
@@ -114,21 +114,21 @@ function App() {
     setIsLoading(true);
 
     try {
-      const apiResponse = await fetch("/api/analyze", { 
+      const apiResponse = await fetch("http://localhost:5000/api/analyze", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ productType, ingredients, skinConcerns }),
       });
-  
+
       if (!apiResponse.ok) {
         throw new Error("Network response was not ok");
       }
-  
+
       const data = await apiResponse.json();
       setResponse(data.response);
-      setRating(data.rating);
+      setRating(data.rating); // rating from the API response
     } catch (error) {
       console.error("Error:", error);
       setResponse("An error occurred while analyzing.");
@@ -148,6 +148,16 @@ function App() {
   }
 
   return (
+    <div
+      style={{
+        background: `url(spill1.jpg) repeat-x center center fixed`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        width: "100vw",
+        height: "100vh",
+        overflow: "hidden",
+      }}
+    >
       <ThemeProvider theme={theme}>
         <div>
           <Typography
@@ -160,8 +170,8 @@ function App() {
               display: "flex",
               justifyContent: "center",
               textAlign: "center",
-              letterSpacing: '19px', 
-              wordSpacing: '20px',  
+              letterSpacing: "23px",
+              wordSpacing: "20px",
             }}
           >
             GLOW AI
@@ -189,16 +199,23 @@ function App() {
                     setProductType(newInputValue)
                   }
                   options={productTypes}
+                  freeSolo
                   sx={{
-                    width: "390px",
+                    width: "393px",
                     "& .MuiOutlinedInput-root": {
-                      "& fieldset": { borderWidth: "3px" },
-                      "&:hover fieldset": { borderWidth: "3px" },
-                      "&.Mui-focused fieldset": { borderWidth: "3px" },
+                      "& fieldset": {
+                        borderWidth: "5px",
+                        borderColor: "#987998",
+                      },
+                      "&:hover fieldset": {
+                        borderColor: "#845584",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "#845584",
+                      },
                     },
                     margin: "normal",
                   }}
-                  freeSolo
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -208,17 +225,26 @@ function App() {
                     />
                   )}
                 />
+
                 <TextField
                   fullWidth
                   label="Skin Concerns"
                   variant="outlined"
                   margin="normal"
+                  className="text-field-outline"
                   sx={{
                     width: "390px",
                     "& .MuiOutlinedInput-root": {
-                      "& fieldset": { borderWidth: "3px" },
-                      "&:hover fieldset": { borderWidth: "3px" },
-                      "&.Mui-focused fieldset": { borderWidth: "3px" },
+                      "& fieldset": {
+                        borderWidth: "5px",
+                        borderColor: "#987998",
+                      },
+                      "&:hover fieldset": {
+                        borderColor: "#845584",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "#845584",
+                      },
                     },
                   }}
                   value={skinConcerns}
@@ -235,9 +261,16 @@ function App() {
                 sx={{
                   width: "800px",
                   "& .MuiOutlinedInput-root": {
-                    "& fieldset": { borderWidth: "3px" },
-                    "&:hover fieldset": { borderWidth: "3px" },
-                    "&.Mui-focused fieldset": { borderWidth: "3px" },
+                    "& fieldset": {
+                      borderWidth: "5px",
+                      borderColor: "#987998",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "#845584",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#845584",
+                    },
                   },
                 }}
                 value={ingredients}
@@ -247,13 +280,12 @@ function App() {
                 variant="contained"
                 sx={{
                   height: "70px",
-                  fontSize: "26px",
+                  fontSize: "20px",
                   padding: "4px 8px",
                   mt: 10,
-                  width: "300px",
-                  textTransform: "lowercase",
+                  width: "230px",
                   "& .MuiOutlinedInput-root": {
-                    "& fieldset": { borderWidth: "2px" },
+                    "& fieldset": { borderWidth: "8px", color: "#dcd8d8" },
                     "&:hover fieldset": { borderWidth: "2px" },
                     "&.Mui-focused fieldset": { borderWidth: "2px" },
                   },
@@ -274,7 +306,13 @@ function App() {
         <Dialog
           open={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          classes={{ paper: "custom-dialog" }}
+          PaperProps={{
+            sx: {
+              width: "800vw",
+              maxWidth: "600px",
+              height: "48vh",
+            },
+          }}
         >
           <DialogTitle className="custom-dialog-title">
             Analysis Result
@@ -313,6 +351,7 @@ function App() {
           </DialogActions>
         </Dialog>
       </ThemeProvider>
+    </div>
   );
 }
 
