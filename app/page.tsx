@@ -18,7 +18,7 @@ import {
   Rating,
   ThemeProvider,
 } from "@mui/material";
-//import "./App.css";
+//import "./page.css";
 import StarIcon from "@mui/icons-material/Star";
 import backgroundImage from "./assets/spill1.jpg";
 
