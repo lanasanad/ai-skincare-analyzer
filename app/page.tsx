@@ -12,6 +12,10 @@ import {
   ThemeProvider,
   Button,
   CircularProgress,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 
 const theme = createTheme({
@@ -63,6 +67,8 @@ function App() {
   ];
 
   async function callBackendAPI() {
+    setIsLoading(true);
+
     try {
       const apiResponse = await fetch("/api/analyze", {
         method: "POST",
@@ -77,112 +83,143 @@ function App() {
       }
 
       const data = await apiResponse.json();
+      setResponse(data.response);
+      setRating(data.rating);
     } catch (error) {
       console.error("Error:", error);
+      setResponse("An error occurred while analyzing.");
+    } finally {
+      setIsLoading(false);
+      setIsModalOpen(true);
     }
   }
 
-  return (
-    <ThemeProvider theme={theme}>
-      <div>
-        <Typography
-          marginTop="77px"
-          className="red-hat-display"
-          gutterBottom
-          fontSize="650%"
-          sx={{
-            fontWeight: "600",
-            display: "flex",
-            justifyContent: "center",
-            textAlign: "center",
-            letterSpacing: "19px",
-            wordSpacing: "20px",
-          }}
-        >
-          Skincare Analyser
-        </Typography>
-        <Container>
-          <Box
+  function handleRefresh() {
+    setProductType(null);
+    setIngredients("");
+    setSkinConcerns("");
+    setResponse("");
+    setRating(null);
+    setIsModalOpen(false);
+
+    return (
+      <ThemeProvider theme={theme}>
+        <div>
+          <Typography
+            marginTop="77px"
+            className="red-hat-display"
+            gutterBottom
+            fontSize="650%"
             sx={{
+              fontWeight: "600",
               display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
+              letterSpacing: "19px",
+              wordSpacing: "20px",
             }}
           >
+            Skincare Analyser
+          </Typography>
+          <Container>
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "center",
-                gap: 2,
-                marginBottom: 2,
+                flexDirection: "column",
+                alignItems: "center",
               }}
             >
-              <Autocomplete
-                value={productType}
-                onChange={(event, newValue) => setProductType(newValue)}
-                onInputChange={(event, newInputValue) =>
-                  setProductType(newInputValue)
-                }
-                options={productTypes}
-                freeSolo
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Product Type"
-                    variant="outlined"
-                    margin="normal"
-                  />
-                )}
-              />
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: 2,
+                  marginBottom: 2,
+                }}
+              >
+                <Autocomplete
+                  value={productType}
+                  onChange={(event, newValue) => setProductType(newValue)}
+                  onInputChange={(event, newInputValue) =>
+                    setProductType(newInputValue)
+                  }
+                  options={productTypes}
+                  freeSolo
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Product Type"
+                      variant="outlined"
+                      margin="normal"
+                    />
+                  )}
+                />
+                <TextField
+                  fullWidth
+                  label="Skin Concerns"
+                  variant="outlined"
+                  margin="normal"
+                  value={skinConcerns}
+                  onChange={(e) => setSkinConcerns(e.target.value)}
+                />
+              </Box>
               <TextField
                 fullWidth
-                label="Skin Concerns"
+                multiline
+                minRows={7}
+                label="Ingredients"
                 variant="outlined"
                 margin="normal"
-                value={skinConcerns}
-                onChange={(e) => setSkinConcerns(e.target.value)}
+                value={ingredients}
+                onChange={(e) => setIngredients(e.target.value)}
               />
+              <Button
+                variant="contained"
+                sx={{
+                  height: "70px",
+                  fontSize: "26px",
+                  padding: "4px 8px",
+                  mt: 10,
+                  width: "300px",
+                  textTransform: "lowercase",
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": { borderWidth: "2px" },
+                    "&:hover fieldset": { borderWidth: "2px" },
+                    "&.Mui-focused fieldset": { borderWidth: "2px" },
+                  },
+                }}
+                onClick={callBackendAPI}
+                disabled={isLoading}
+                className="analyze-button"
+              >
+                {isLoading ? (
+                  <CircularProgress size={24} color="inherit" />
+                ) : (
+                  "analyze"
+                )}
+              </Button>
             </Box>
-            <TextField
-              fullWidth
-              multiline
-              minRows={7}
-              label="Ingredients"
-              variant="outlined"
-              margin="normal"
-              value={ingredients}
-              onChange={(e) => setIngredients(e.target.value)}
-            />
-            <Button
-              variant="contained"
-              sx={{
-                height: "70px",
-                fontSize: "26px",
-                padding: "4px 8px",
-                mt: 10,
-                width: "300px",
-                textTransform: "lowercase",
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": { borderWidth: "2px" },
-                  "&:hover fieldset": { borderWidth: "2px" },
-                  "&.Mui-focused fieldset": { borderWidth: "2px" },
-                },
-              }}
-              onClick={callBackendAPI}
-              disabled={isLoading}
-              className="analyze-button"
-            >
-              {isLoading ? (
-                <CircularProgress size={24} color="inherit" />
-              ) : (
-                "analyze"
-              )}
+          </Container>
+        </div>
+        <Dialog
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          classes={{ paper: "custom-dialog" }}
+        >
+          \<DialogTitle>Analysis Result</DialogTitle>
+          <DialogContent>
+            <Typography>{response}</Typography>
+          </DialogContent>
+          <DialogActions className="custom-dialog-actions">
+            <Button onClick={() => setIsModalOpen(false)} color="primary">
+              Close
             </Button>
-          </Box>
-        </Container>
-      </div>
-    </ThemeProvider>
-  );
+            <Button onClick={handleRefresh}>Refresh</Button>
+          </DialogActions>
+        </Dialog>
+      </ThemeProvider>
+    );
+  }
 }
 
 export default App;
