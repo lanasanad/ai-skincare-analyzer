@@ -259,6 +259,7 @@ function App() {
                 variant="outlined"
                 margin="normal"
                 sx={{
+                  minWidth: "800px", 
                   width: "800px",
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
