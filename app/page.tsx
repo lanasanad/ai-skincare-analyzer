@@ -116,7 +116,7 @@ function App() {
     setIsLoading(true);
 
     try {
-      const apiResponse = await fetch("http://localhost:5000/api/analyze", {
+      const apiResponse = await fetch("https://ai-skin-checker-90udpb17t-mimis-projects-f682eca9.vercel.app/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
