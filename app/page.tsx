@@ -116,18 +116,18 @@ function App() {
     setIsLoading(true);
 
     try {
-      const apiResponse = await fetch("https://ai-skin-checker-90udpb17t-mimis-projects-f682eca9.vercel.app/", {
+      const apiResponse = await fetch("/api/analyze", { // updated the URL to use the new API route
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ productType, ingredients, skinConcerns }),
       });
-
+  
       if (!apiResponse.ok) {
         throw new Error("Network response was not ok");
       }
-
+  
       const data = await apiResponse.json();
       setResponse(data.response);
       setRating(data.rating); // rating from the API response
