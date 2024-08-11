@@ -11,7 +11,7 @@ const openai = new OpenAI({
 });
 
 app.post('/api/analyze', async (req, res) => {
-  console.log("Received request:", req.body);
+  console.log("api request:", req.body);
   try {
     const { ingredients, skinConcerns, productType } = req.body;
 
