@@ -28,6 +28,10 @@ export async function POST(request) {
 
     const textResponse = response.choices[0].message.content.trim();
 
+    const ratingMatch = textResponse.match(/(\d+)/);
+    const rating = ratingMatch ? parseInt(ratingMatch[1]) : null;
+    return NextResponse.json({ response: textResponse.replace(/(\d+)\/5/, '').trim(), rating });
+
   } catch (error) {
     console.error('Error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });

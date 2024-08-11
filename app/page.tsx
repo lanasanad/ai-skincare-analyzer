@@ -16,6 +16,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Rating,
 } from "@mui/material";
 
 const theme = createTheme({
