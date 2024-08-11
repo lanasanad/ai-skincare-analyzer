@@ -1,23 +1,24 @@
 "use client";
 
 import React, { useState } from "react";
-import "./page.css";
 import {
   TextField,
   Box,
   Autocomplete,
+  ThemeProvider,
   Typography,
   Container,
-  createTheme,
-  ThemeProvider,
-  Button,
   CircularProgress,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
+  createTheme,
+  Button,
   Rating,
 } from "@mui/material";
+import "./page.css";
+import StarIcon from "@mui/icons-material/Star";
 
 const theme = createTheme({
   palette: {
@@ -44,6 +45,18 @@ function App() {
     "Cream Cleanser",
     "Face Wash",
     "Foaming Cleanser",
+    "Gel Cleanser",
+    "Oil Cleanser",
+    "Chemical Exfoliator",
+    "Peel",
+    "Physical Exfoliator / Scrub",
+    "Charcoal Mask",
+    "Clay Mask",
+    "Detox Mask",
+    "Mask",
+    "Mud Mask",
+    "Sheet Mask",
+    "Sleeping Mask",
     "Under eye Mask",
     "Face Mist",
     "Day Cream",
@@ -52,15 +65,45 @@ function App() {
     "Gel cream",
     "Hand Cream",
     "Intensive Moisturizer",
+    "Lip Balm",
+    "Lip Mask",
+    "Lip Oil",
+    "Lip Scrub",
+    "Face Moisturizer",
+    "Night Cream",
+    "Tinted Moisturizer",
+    "Face Oil",
+    "Squalane",
+    "AHA (Alpha Hydroxy Acid) Serum",
+    "Antioxidant Serum",
+    "Azelaic Acid",
+    "BHA (Beta Hydroxy Acid) Serum",
+    "Brightening Serum",
+    "Collagen Serum",
     "Cooling Gel",
     "Glycolic Acid",
     "Hyaluronic Acid Serum",
+    "Niacinamide Serum",
+    "Peptide Serum",
+    "PHA (Polyhydroxy Acid) Serum",
+    "Probiotic Serum",
+    "Quercetin Serum",
+    "Retinol",
+    "Rosehip Oil",
+    "Serum",
+    "Vitamin C Serum",
+    "Vitamin E Oil",
+    "Sunscreen",
+    "Acne Spot Treatment",
     "Pore Minimizer",
     "Spot Treatment",
     "Body Butter",
     "Body Lotion",
     "Body Oil",
     "Body Scrub",
+    "Body Moisturizer",
+    "Calamine Lotion",
+    "Makeup Remover",
     "Micellar Water",
     "Face Balm",
     "Toner",
@@ -71,18 +114,18 @@ function App() {
     setIsLoading(true);
 
     try {
-      const apiResponse = await fetch("/api/analyze", {
+      const apiResponse = await fetch("/api/analyze", { 
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ productType, ingredients, skinConcerns }),
       });
-
+  
       if (!apiResponse.ok) {
         throw new Error("Network response was not ok");
       }
-
+  
       const data = await apiResponse.json();
       setResponse(data.response);
       setRating(data.rating);
@@ -102,8 +145,9 @@ function App() {
     setResponse("");
     setRating(null);
     setIsModalOpen(false);
+  }
 
-    return (
+  return (
       <ThemeProvider theme={theme}>
         <div>
           <Typography
@@ -116,11 +160,11 @@ function App() {
               display: "flex",
               justifyContent: "center",
               textAlign: "center",
-              letterSpacing: "19px",
-              wordSpacing: "20px",
+              letterSpacing: '19px', 
+              wordSpacing: '20px',  
             }}
           >
-            Skincare Analyser
+            GLOW AI
           </Typography>
           <Container>
             <Box
@@ -145,6 +189,15 @@ function App() {
                     setProductType(newInputValue)
                   }
                   options={productTypes}
+                  sx={{
+                    width: "390px",
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": { borderWidth: "3px" },
+                      "&:hover fieldset": { borderWidth: "3px" },
+                      "&.Mui-focused fieldset": { borderWidth: "3px" },
+                    },
+                    margin: "normal",
+                  }}
                   freeSolo
                   renderInput={(params) => (
                     <TextField
@@ -160,6 +213,14 @@ function App() {
                   label="Skin Concerns"
                   variant="outlined"
                   margin="normal"
+                  sx={{
+                    width: "390px",
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": { borderWidth: "3px" },
+                      "&:hover fieldset": { borderWidth: "3px" },
+                      "&.Mui-focused fieldset": { borderWidth: "3px" },
+                    },
+                  }}
                   value={skinConcerns}
                   onChange={(e) => setSkinConcerns(e.target.value)}
                 />
@@ -171,6 +232,14 @@ function App() {
                 label="Ingredients"
                 variant="outlined"
                 margin="normal"
+                sx={{
+                  width: "800px",
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": { borderWidth: "3px" },
+                    "&:hover fieldset": { borderWidth: "3px" },
+                    "&.Mui-focused fieldset": { borderWidth: "3px" },
+                  },
+                }}
                 value={ingredients}
                 onChange={(e) => setIngredients(e.target.value)}
               />
@@ -207,9 +276,34 @@ function App() {
           onClose={() => setIsModalOpen(false)}
           classes={{ paper: "custom-dialog" }}
         >
-          \<DialogTitle>Analysis Result</DialogTitle>
-          <DialogContent>
+          <DialogTitle className="custom-dialog-title">
+            Analysis Result
+          </DialogTitle>
+          <DialogContent className="custom-dialog-content">
             <Typography>{response}</Typography>
+            <Rating
+              name="product-rating"
+              value={rating}
+              max={5}
+              readOnly
+              precision={0.5}
+              size="large"
+              icon={
+                <StarIcon style={{ color: "#f1c60877", fontSize: "4rem" }} />
+              }
+              emptyIcon={
+                <StarIcon style={{ color: "#f1c608", fontSize: "4rem" }} />
+              }
+              sx={{
+                "& .MuiRating-iconEmpty": {
+                  color: "#C8A2C8",
+                },
+                "& .MuiRating-iconFilled": {
+                  color: "#DACDDA",
+                },
+                direction: "rtl",
+              }}
+            />
           </DialogContent>
           <DialogActions className="custom-dialog-actions">
             <Button onClick={() => setIsModalOpen(false)} color="primary">
@@ -219,8 +313,7 @@ function App() {
           </DialogActions>
         </Dialog>
       </ThemeProvider>
-    );
-  }
+  );
 }
 
 export default App;
