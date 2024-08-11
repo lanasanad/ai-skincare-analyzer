@@ -4,6 +4,10 @@ import OpenAI from 'openai';
 export async function POST(request) {
   try {
     const { ingredients, skinConcerns, productType } = await request.json();
+    
+    const openai = new OpenAI({
+      apiKey: process.env.API_KEY
+    });
 
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
