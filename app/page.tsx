@@ -10,6 +10,8 @@ import {
   Container,
   createTheme,
   ThemeProvider,
+  Button,
+  CircularProgress,
 } from "@mui/material";
 
 const theme = createTheme({
@@ -25,6 +27,10 @@ function App() {
   const [productType, setProductType] = useState<string | null>(null);
   const [ingredients, setIngredients] = useState<string>("");
   const [skinConcerns, setSkinConcerns] = useState<string>("");
+  const [response, setResponse] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [rating, setRating] = useState<number | null>(null);
 
   const productTypes = [
     "Cleanser",
@@ -89,8 +95,8 @@ function App() {
             display: "flex",
             justifyContent: "center",
             textAlign: "center",
-            letterSpacing: "19px",  
-            wordSpacing: "20px", 
+            letterSpacing: "19px",
+            wordSpacing: "20px",
           }}
         >
           Skincare Analyser
@@ -118,7 +124,6 @@ function App() {
                   setProductType(newInputValue)
                 }
                 options={productTypes}
-               
                 freeSolo
                 renderInput={(params) => (
                   <TextField
@@ -148,6 +153,31 @@ function App() {
               value={ingredients}
               onChange={(e) => setIngredients(e.target.value)}
             />
+            <Button
+              variant="contained"
+              sx={{
+                height: "70px",
+                fontSize: "26px",
+                padding: "4px 8px",
+                mt: 10,
+                width: "300px",
+                textTransform: "lowercase",
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": { borderWidth: "2px" },
+                  "&:hover fieldset": { borderWidth: "2px" },
+                  "&.Mui-focused fieldset": { borderWidth: "2px" },
+                },
+              }}
+              onClick={callBackendAPI}
+              disabled={isLoading}
+              className="analyze-button"
+            >
+              {isLoading ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "analyze"
+              )}
+            </Button>
           </Box>
         </Container>
       </div>
