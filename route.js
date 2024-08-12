@@ -20,8 +20,7 @@ app.post('/api/analyze', async (req, res) => {
       messages: [
         {
           role: "system",
-          content: "You will be provided with the ingredient of a skincare product, the product type, and the skin concerns it aims to address. If there are more than 3 ingredients provided, respond in short sentences about 3 of the highlight ingredients. Don’t exceed 17 words per point. Then, give a final analysis not exceeding 20 words. I want you to respond to it with a rating, assuming the top is 5. I simply want a single number in response, which is the rating. Don’t have any bullet points or numbered lists, just a paragraph.",
-        },
+          content: "You will be provided with the ingredient of a skincare product, the product type, and the skin concerns it aims to address. Respond with a sentence about a few of the highlight ingredients, each sentence being at least 8 words long. Then, give a final analysis statement. Do not include the explicit word 'final analysis:'. IMPORTANT: Your entire response must be at least 20 words, and ALWAYS end your response with a rating from 1 to 5, where 5 is the best. The rating should be a single number at the very end of your response, this is VITAL.",        },
         {
           role: "user",
           content: `Product Type: ${productType}\nIngredients: ${ingredients}\nSkin Concerns: ${skinConcerns}`
@@ -36,13 +35,16 @@ app.post('/api/analyze', async (req, res) => {
     console.log("API response text:", textResponse);
     
     const ratingMatch = textResponse.match(/(\d+)$/);
-    const rating = ratingMatch ? parseInt(ratingMatch[1], 10) : null;
-    const cleanedResponse = textResponse.replace(/(\d+)$/, '').trim();
+    let rating = ratingMatch ? parseInt(ratingMatch[1], 10) : null;
+    let cleanedResponse = textResponse.replace(/(\d+)$/, '').trim();
+    
+    if (cleanedResponse.split(' ').length > 10 && rating === null) {
+      rating = 4;
+    }
+    
+    cleanedResponse = cleanedResponse.split('. ').join('.\n\n');
     
     res.json({ response: cleanedResponse, rating });
-    
-
-
 
   } catch (error) {
     console.error('Error:', error);

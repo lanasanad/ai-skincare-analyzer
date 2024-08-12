@@ -338,19 +338,25 @@ function App() {
           PaperProps={{
             sx: {
               width: "900vw",
-              maxWidth: "700px",
-              height: "40vh",
-              backgroundColor: "#b6a1b6",
+              maxWidth: "800px",
+              height: "55vh",
+              backgroundColor: "#cabeca",
               borderRadius: "10px",
-              padding: "20px",
+              padding: "10px",
               boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
             },
           }}
         >
           <DialogTitle className="dialog-title">ANALYSIS RESULT</DialogTitle>
-          <DialogContent>
-            <Typography className="response">{response}</Typography>
-
+          <DialogContent
+            sx={{ display: "flex", flexDirection: "column", height: "100%" }}
+          >
+            <Typography
+              className="response"
+              sx={{ flexGrow: 1, whiteSpace: "pre-line", overflow: "auto" }}
+            >
+              {response}
+            </Typography>
             <Box
               sx={{
                 display: "flex",
@@ -366,71 +372,20 @@ function App() {
                 readOnly
                 precision={0.5}
                 size="large"
-                icon={<StarIcon style={{ fontSize: "4rem" }} />}
-                emptyIcon={<StarIcon style={{ fontSize: "4rem" }} />}
+                icon={<StarIcon style={{ fontSize: "3.2rem" }} />}
+                emptyIcon={<StarIcon style={{ fontSize: "3.2rem" }} />}
                 sx={{
                   "& .MuiRating-iconEmpty": {
                     color: "#edecf093",
                   },
                   "& .MuiRating-iconFilled": {
-                    color: "#d3c5008f",
-                  },
-                }}
-              />
-            </Box>
-          </DialogContent>
-          <DialogActions className="dialog-buttons">
-            <Button
-              onClick={() => setIsModalOpen(false)}
-              color="primary"
-              className="custom-button"
-            >
-              Close
-            </Button>
-            <Button onClick={handleRefresh} className="dialog-buttons">
-              Refresh
-            </Button>
-          </DialogActions>
-        </Dialog>
-        <Dialog
-          open={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          PaperProps={{
-            sx: {
-              width: "900vw",
-              maxWidth: "700px",
-              height: "55vh",
-              backgroundColor: "#cabeca",
-              borderRadius: "10px",
-              padding: "20px",
-              boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
-            },
-          }}
-        >
-          <DialogTitle className="dialog-title">ANALYSIS RESULT</DialogTitle>
-          <DialogContent>
-            <Typography className="response">{response}</Typography>
-            <Box
-              sx={{ display: "flex", justifyContent: "center", width: "100%" }}
-            >
-              <Rating
-                name="product-rating"
-                value={rating}
-                max={5}
-                readOnly
-                precision={0.5}
-                size="large"
-                icon={<StarIcon style={{ fontSize: "4rem" }} />}
-                emptyIcon={<StarIcon style={{ fontSize: "4rem" }} />}
-                sx={{
-                  "& .MuiRating-iconEmpty": {
-                    color: "#edecf093", 
-                  },
-                  "& .MuiRating-iconFilled": {
-                    color: "#fbff00", 
+                    color: "#ffffff",
                     filter:
                       "drop-shadow(0 0 5px #ffc400) drop-shadow(0 0 10px #ffc400) drop-shadow(0 0 15px #ffc400)",
                     animation: "star-glow 1.5s ease-in-out infinite alternate",
+                  },
+                  "& .MuiRating-icon": {
+                    marginRight: "1rem",
                   },
                 }}
               />
