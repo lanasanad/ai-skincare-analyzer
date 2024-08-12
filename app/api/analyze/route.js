@@ -14,7 +14,7 @@ export async function POST(request) {
       messages: [
         {
           role: "system",
-          content: "You will be provided with the ingredient of a skincare product, the product type, and the skin concerns it aims to address. If there are more than 3 ingredients provided, respond in short sentences about 3 of the highlight ingredients. Don’t exceed 15 words per point. Then, give a final analysis not exceeding 25 words. I want you to respond to it with a rating, assuming the top is 5. I simply want a single number in response, which is the rating. Don’t have any bullet points or numbered lists, just a paragraph. Every new thing you talk about, I want a new line",
+          content: "You will be provided with the ingredient of a skincare product, the product type, and the skin concerns it aims to address. If there are more than 3 ingredients provided, respond in short sentences about 3 of the highlight ingredients. Don’t exceed 17 words per point. Then, give a final analysis not exceeding 20 words. I want you to respond to it with a rating, assuming the top is 5. I simply want a single number in response, which is the rating. Don’t have any bullet points or numbered lists, just a paragraph.",
         },
         {
           role: "user",

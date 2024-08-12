@@ -20,7 +20,7 @@ app.post('/api/analyze', async (req, res) => {
       messages: [
         {
           role: "system",
-          content: "You will be provided with the ingredient of a skincare product, the product type, and the skin concerns it aims to address. If there are more than 3 ingredients provided, respond in short sentences about 3 of the highlight ingredients. Don’t exceed 15 words per point. Then, give a final analysis not exceeding 15 words. I want you to respond to it with a rating, assuming the top is 5. I simply want a single number in response, which is the rating. Don’t have any bullet points or numbered lists, just a paragraph.",
+          content: "You will be provided with the ingredient of a skincare product, the product type, and the skin concerns it aims to address. If there are more than 3 ingredients provided, respond in short sentences about 3 of the highlight ingredients. Don’t exceed 17 words per point. Then, give a final analysis not exceeding 20 words. I want you to respond to it with a rating, assuming the top is 5. I simply want a single number in response, which is the rating. Don’t have any bullet points or numbered lists, just a paragraph.",
         },
         {
           role: "user",
@@ -40,6 +40,9 @@ app.post('/api/analyze', async (req, res) => {
     const cleanedResponse = textResponse.replace(/(\d+)$/, '').trim();
     
     res.json({ response: cleanedResponse, rating });
+    
+
+
 
   } catch (error) {
     console.error('Error:', error);
