@@ -127,9 +127,9 @@ function App() {
       }
 
       const data = await apiResponse.json();
-      console.log("API Response:", data);  
+      console.log("API Response:", data);
       setResponse(data.response);
-      setRating(data.rating); 
+      setRating(data.rating);
     } catch (error) {
       console.error("Error:", error);
       setResponse("An error occurred while analyzing.");
@@ -216,13 +216,13 @@ function App() {
                       },
                     },
                     "& .MuiInputLabel-root": {
-                      color: "#987998",  
+                      color: "#987998",
                       "&.Mui-focused": {
-                        color: "#845584", 
+                        color: "#845584",
                       },
                     },
                     "& .MuiInputLabel-shrink": {
-                      color: "#845584", 
+                      color: "#845584",
                     },
                     margin: "normal",
                   }}
@@ -257,13 +257,13 @@ function App() {
                       },
                     },
                     "& .MuiInputLabel-root": {
-                      color: "#987998", 
+                      color: "#987998",
                       "&.Mui-focused": {
                         color: "#845584",
                       },
                     },
                     "& .MuiInputLabel-shrink": {
-                      color: "#845584", 
+                      color: "#845584",
                     },
                   }}
                   value={skinConcerns}
@@ -294,11 +294,11 @@ function App() {
                   "& .MuiInputLabel-root": {
                     color: "#987998",
                     "&.Mui-focused": {
-                      color: "#845584", 
+                      color: "#845584",
                     },
                   },
                   "& .MuiInputLabel-shrink": {
-                    color: "#845584", 
+                    color: "#845584",
                   },
                 }}
                 value={ingredients}
@@ -333,110 +333,122 @@ function App() {
           </Container>
         </div>
         <Dialog
-  open={isModalOpen}
-  onClose={() => setIsModalOpen(false)}
-  PaperProps={{
-    sx: {
-      width: "900vw",
-      maxWidth: "700px",
-      height: "40vh",
-      backgroundColor: "#b6a1b6",
-      borderRadius: "10px",
-      padding: "20px",
-      boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
-    },
-  }}
->
-  <DialogTitle className="dialog-title">ANALYSIS RESULT</DialogTitle>
-  <DialogContent>
-    <Typography className="response">{response}</Typography>
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          PaperProps={{
+            sx: {
+              width: "900vw",
+              maxWidth: "700px",
+              height: "40vh",
+              backgroundColor: "#b6a1b6",
+              borderRadius: "10px",
+              padding: "20px",
+              boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+            },
+          }}
+        >
+          <DialogTitle className="dialog-title">ANALYSIS RESULT</DialogTitle>
+          <DialogContent>
+            <Typography className="response">{response}</Typography>
 
-    <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', mt: 2 }}>
-      <Rating
-        name="product-rating"
-        value={rating}
-        max={5}
-        readOnly
-        precision={0.5}
-        size="large"
-        icon={<StarIcon style={{ fontSize: "4rem" }} />}
-        emptyIcon={<StarIcon style={{ fontSize: "4rem" }} />}
-        sx={{
-          "& .MuiRating-iconEmpty": {
-            color: "#edecf093",
-          },
-          "& .MuiRating-iconFilled": {
-            color: "#ffffff",
-          },
-        }}
-      />
-    </Box>
-  </DialogContent>
-  <DialogActions className="dialog-buttons">
-    <Button
-      onClick={() => setIsModalOpen(false)}
-      color="primary"
-      className="custom-button"
-    >
-      Close
-    </Button>
-    <Button onClick={handleRefresh} className="dialog-buttons">
-      Refresh
-    </Button>
-  </DialogActions>
-</Dialog><Dialog
-  open={isModalOpen}
-  onClose={() => setIsModalOpen(false)}
-  PaperProps={{
-    sx: {
-      width: "900vw",
-      maxWidth: "700px",
-      height: "55vh",
-      backgroundColor: "#cabeca",
-      borderRadius: "10px",
-      padding: "20px",
-      boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
-    },
-  }}
->
-  <DialogTitle className="dialog-title">ANALYSIS RESULT</DialogTitle>
-  <DialogContent>
-    <Typography className="response">{response}</Typography>
-
-    <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', }}>
-      <Rating
-        name="product-rating"
-        value={rating}
-        max={5}
-        readOnly
-        precision={0.5}
-        size="large"
-        icon={<StarIcon style={{ fontSize: "4rem" }} />}
-        emptyIcon={<StarIcon style={{ fontSize: "4rem" }} />}
-        sx={{
-          "& .MuiRating-iconEmpty": {
-            color: "#edecf093",
-          },
-          "& .MuiRating-iconFilled": {
-            color: "#ffffff",
-          },
-        }}
-      />
-    </Box>
-  </DialogContent>
-  <DialogActions className="dialog-buttons">
-    <Button
-      onClick={() => setIsModalOpen(false)}
-      color="primary"
-      className="custom-button"
-    >
-      Close
-    </Button>
-    <Button onClick={handleRefresh} className="dialog-buttons">
-      Refresh
-    </Button>
-  </DialogActions>
-</Dialog>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+                mt: 2,
+              }}
+            >
+              <Rating
+                name="product-rating"
+                value={rating}
+                max={5}
+                readOnly
+                precision={0.5}
+                size="large"
+                icon={<StarIcon style={{ fontSize: "4rem" }} />}
+                emptyIcon={<StarIcon style={{ fontSize: "4rem" }} />}
+                sx={{
+                  "& .MuiRating-iconEmpty": {
+                    color: "#edecf093",
+                  },
+                  "& .MuiRating-iconFilled": {
+                    color: "#d3c5008f",
+                  },
+                }}
+              />
+            </Box>
+          </DialogContent>
+          <DialogActions className="dialog-buttons">
+            <Button
+              onClick={() => setIsModalOpen(false)}
+              color="primary"
+              className="custom-button"
+            >
+              Close
+            </Button>
+            <Button onClick={handleRefresh} className="dialog-buttons">
+              Refresh
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          PaperProps={{
+            sx: {
+              width: "900vw",
+              maxWidth: "700px",
+              height: "55vh",
+              backgroundColor: "#cabeca",
+              borderRadius: "10px",
+              padding: "20px",
+              boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+            },
+          }}
+        >
+          <DialogTitle className="dialog-title">ANALYSIS RESULT</DialogTitle>
+          <DialogContent>
+            <Typography className="response">{response}</Typography>
+            <Box
+              sx={{ display: "flex", justifyContent: "center", width: "100%" }}
+            >
+              <Rating
+                name="product-rating"
+                value={rating}
+                max={5}
+                readOnly
+                precision={0.5}
+                size="large"
+                icon={<StarIcon style={{ fontSize: "4rem" }} />}
+                emptyIcon={<StarIcon style={{ fontSize: "4rem" }} />}
+                sx={{
+                  "& .MuiRating-iconEmpty": {
+                    color: "#edecf093", 
+                  },
+                  "& .MuiRating-iconFilled": {
+                    color: "#fbff00", 
+                    filter:
+                      "drop-shadow(0 0 5px #ffc400) drop-shadow(0 0 10px #ffc400) drop-shadow(0 0 15px #ffc400)",
+                    animation: "star-glow 1.5s ease-in-out infinite alternate",
+                  },
+                }}
+              />
+            </Box>
+          </DialogContent>
+          <DialogActions className="dialog-buttons">
+            <Button
+              onClick={() => setIsModalOpen(false)}
+              color="primary"
+              className="custom-button"
+            >
+              Close
+            </Button>
+            <Button onClick={handleRefresh} className="dialog-buttons">
+              Refresh
+            </Button>
+          </DialogActions>
+        </Dialog>
       </ThemeProvider>
     </div>
   );

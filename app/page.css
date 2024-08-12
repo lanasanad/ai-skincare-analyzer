@@ -1,8 +1,16 @@
 .red-hat-display {
-    color: #ffffff;
+    color: #fbff00;
     font-family: 'Red Hat Display', sans-serif;
     text-shadow: 0 0 10px #e4dfdf, 0 0 20px #f1ecec, 0 0 30px #e6e4ea, 0 0 40px #d0cdd4, 0 0 50px #c3bfc9, 0 0 60px rgb(198, 194, 201), 0 0 70px #c6c1ca;
   
+  }
+  @keyframes star-glow {
+    from {
+      filter: drop-shadow(0 0 5px #fbff00) drop-shadow(0 0 10px #e6ea04) drop-shadow(0 0 15px #e6ea04);
+    }
+    to {
+      filter: drop-shadow(0 0 7px #b6a1b6) ;
+    }
   }
   
   body, html {
