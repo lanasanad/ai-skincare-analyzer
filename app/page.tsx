@@ -339,7 +339,7 @@ function App() {
             sx: {
               width: "900vw",
               maxWidth: "800px",
-              height: "55vh",
+              height: "58vh",
               backgroundColor: "#cabeca",
               borderRadius: "10px",
               padding: "10px",
@@ -372,8 +372,8 @@ function App() {
                 readOnly
                 precision={0.5}
                 size="large"
-                icon={<StarIcon style={{ fontSize: "3.2rem" }} />}
-                emptyIcon={<StarIcon style={{ fontSize: "3.2rem" }} />}
+                icon={<StarIcon style={{ fontSize: "3.4rem" }} />}
+                emptyIcon={<StarIcon style={{ fontSize: "3.4rem" }} />}
                 sx={{
                   "& .MuiRating-iconEmpty": {
                     color: "#edecf093",
