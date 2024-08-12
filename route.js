@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
-const OpenAI = require("openai");
+const OpenAI = require('openai');
+const cors = require('cors');
 
 const app = express();
 app.use(cors());
@@ -11,7 +12,6 @@ const openai = new OpenAI({
 });
 
 app.post('/api/analyze', async (req, res) => {
-  console.log("api request:", req.body);
   try {
     const { ingredients, skinConcerns, productType } = req.body;
 
@@ -19,12 +19,12 @@ app.post('/api/analyze', async (req, res) => {
       model: "gpt-3.5-turbo",
       messages: [
         {
-          "role": "system",
-          "content": "You will be provided with the ingredient of a skincare product, face or body, and the product type, and the skin concerns it aims to address. Provide short points about 3 of the highlight ingredients. Say what number of 5 you would recommend it, the most being 5 stars. Just say the number you would give it, not the entire rating out of 5. Don't exceed 50 words. I want each ingredient point to start off like this: INGREDIENT - explanation. Each ingredient must be in a NEW line with space in between each ingredient."
+          role: "system",
+          content: "You will be provided with the ingredient of a skincare product, the product type, and the skin concerns it aims to address. If there are more than 3 ingredients provided, respond in short sentences about 3 of the highlight ingredients. Don’t exceed 15 words per point. Then, give a final analysis not exceeding 15 words. I want you to respond to it with a rating, assuming the top is 5. I simply want a single number in response, which is the rating. Don’t have any bullet points or numbered lists, just a paragraph.",
         },
         {
-          "role": "user",
-          "content": `Product Type: ${productType}\nIngredients: ${ingredients}\nSkin Concerns: ${skinConcerns}`
+          role: "user",
+          content: `Product Type: ${productType}\nIngredients: ${ingredients}\nSkin Concerns: ${skinConcerns}`
         }
       ],
       temperature: 0.7,
@@ -33,11 +33,14 @@ app.post('/api/analyze', async (req, res) => {
     });
 
     const textResponse = response.choices[0].message.content.trim();
-
-    const ratingMatch = textResponse.match(/(\d+)/);
-    const rating = ratingMatch ? parseInt(ratingMatch[1]) : null;
-    res.json({ response: textResponse.replace(/(\d+)\/5/, '').trim(), rating });
+    console.log("API response text:", textResponse);
     
+    const ratingMatch = textResponse.match(/(\d+)$/);
+    const rating = ratingMatch ? parseInt(ratingMatch[1], 10) : null;
+    const cleanedResponse = textResponse.replace(/(\d+)$/, '').trim();
+    
+    res.json({ response: cleanedResponse, rating });
+
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: error.message });

@@ -114,7 +114,7 @@ function App() {
     setIsLoading(true);
 
     try {
-      const apiResponse = await fetch("http://localhost:5000/api/analyze", {
+      const apiResponse = await fetch("/api/analyze", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -127,8 +127,9 @@ function App() {
       }
 
       const data = await apiResponse.json();
+      console.log("API Response:", data);  
       setResponse(data.response);
-      setRating(data.rating); // rating from the API response
+      setRating(data.rating); 
     } catch (error) {
       console.error("Error:", error);
       setResponse("An error occurred while analyzing.");
@@ -170,7 +171,7 @@ function App() {
               display: "flex",
               justifyContent: "center",
               textAlign: "center",
-              letterSpacing: "23px",
+              letterSpacing: "27px",
               wordSpacing: "20px",
             }}
           >
@@ -214,6 +215,15 @@ function App() {
                         borderColor: "#845584",
                       },
                     },
+                    "& .MuiInputLabel-root": {
+                      color: "#987998",  
+                      "&.Mui-focused": {
+                        color: "#845584", 
+                      },
+                    },
+                    "& .MuiInputLabel-shrink": {
+                      color: "#845584", 
+                    },
                     margin: "normal",
                   }}
                   renderInput={(params) => (
@@ -246,6 +256,15 @@ function App() {
                         borderColor: "#845584",
                       },
                     },
+                    "& .MuiInputLabel-root": {
+                      color: "#987998", 
+                      "&.Mui-focused": {
+                        color: "#845584",
+                      },
+                    },
+                    "& .MuiInputLabel-shrink": {
+                      color: "#845584", 
+                    },
                   }}
                   value={skinConcerns}
                   onChange={(e) => setSkinConcerns(e.target.value)}
@@ -259,7 +278,6 @@ function App() {
                 variant="outlined"
                 margin="normal"
                 sx={{
-                  minWidth: "800px", 
                   width: "800px",
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
@@ -273,6 +291,15 @@ function App() {
                       borderColor: "#845584",
                     },
                   },
+                  "& .MuiInputLabel-root": {
+                    color: "#987998",
+                    "&.Mui-focused": {
+                      color: "#845584", 
+                    },
+                  },
+                  "& .MuiInputLabel-shrink": {
+                    color: "#845584", 
+                  },
                 }}
                 value={ingredients}
                 onChange={(e) => setIngredients(e.target.value)}
@@ -280,11 +307,12 @@ function App() {
               <Button
                 variant="contained"
                 sx={{
-                  height: "70px",
+                  height: "60px",
                   fontSize: "20px",
-                  padding: "4px 8px",
+                  padding: "2px 4px",
                   mt: 10,
-                  width: "230px",
+                  textTransform: "none",
+                  width: "200px",
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": { borderWidth: "8px", color: "#dcd8d8" },
                     "&:hover fieldset": { borderWidth: "2px" },
@@ -296,61 +324,119 @@ function App() {
                 className="analyze-button"
               >
                 {isLoading ? (
-                  <CircularProgress size={24} color="inherit" />
+                  <CircularProgress size={28} color="inherit" />
                 ) : (
-                  "analyze"
+                  "ANALYZE"
                 )}
               </Button>
             </Box>
           </Container>
         </div>
         <Dialog
-          open={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          PaperProps={{
-            sx: {
-              width: "800vw",
-              maxWidth: "600px",
-              height: "48vh",
-            },
-          }}
-        >
-          <DialogTitle className="custom-dialog-title">
-            Analysis Result
-          </DialogTitle>
-          <DialogContent className="custom-dialog-content">
-            <Typography>{response}</Typography>
-            <Rating
-              name="product-rating"
-              value={rating}
-              max={5}
-              readOnly
-              precision={0.5}
-              size="large"
-              icon={
-                <StarIcon style={{ color: "#f1c60877", fontSize: "4rem" }} />
-              }
-              emptyIcon={
-                <StarIcon style={{ color: "#f1c608", fontSize: "4rem" }} />
-              }
-              sx={{
-                "& .MuiRating-iconEmpty": {
-                  color: "#C8A2C8",
-                },
-                "& .MuiRating-iconFilled": {
-                  color: "#DACDDA",
-                },
-                direction: "rtl",
-              }}
-            />
-          </DialogContent>
-          <DialogActions className="custom-dialog-actions">
-            <Button onClick={() => setIsModalOpen(false)} color="primary">
-              Close
-            </Button>
-            <Button onClick={handleRefresh}>Refresh</Button>
-          </DialogActions>
-        </Dialog>
+  open={isModalOpen}
+  onClose={() => setIsModalOpen(false)}
+  PaperProps={{
+    sx: {
+      width: "900vw",
+      maxWidth: "700px",
+      height: "40vh",
+      backgroundColor: "#b6a1b6",
+      borderRadius: "10px",
+      padding: "20px",
+      boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+    },
+  }}
+>
+  <DialogTitle className="dialog-title">ANALYSIS RESULT</DialogTitle>
+  <DialogContent>
+    <Typography className="response">{response}</Typography>
+
+    <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', mt: 2 }}>
+      <Rating
+        name="product-rating"
+        value={rating}
+        max={5}
+        readOnly
+        precision={0.5}
+        size="large"
+        icon={<StarIcon style={{ fontSize: "4rem" }} />}
+        emptyIcon={<StarIcon style={{ fontSize: "4rem" }} />}
+        sx={{
+          "& .MuiRating-iconEmpty": {
+            color: "#edecf093",
+          },
+          "& .MuiRating-iconFilled": {
+            color: "#ffffff",
+          },
+        }}
+      />
+    </Box>
+  </DialogContent>
+  <DialogActions className="dialog-buttons">
+    <Button
+      onClick={() => setIsModalOpen(false)}
+      color="primary"
+      className="custom-button"
+    >
+      Close
+    </Button>
+    <Button onClick={handleRefresh} className="dialog-buttons">
+      Refresh
+    </Button>
+  </DialogActions>
+</Dialog><Dialog
+  open={isModalOpen}
+  onClose={() => setIsModalOpen(false)}
+  PaperProps={{
+    sx: {
+      width: "900vw",
+      maxWidth: "700px",
+      height: "55vh",
+      backgroundColor: "#cabeca",
+      borderRadius: "10px",
+      padding: "20px",
+      boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+    },
+  }}
+>
+  <DialogTitle className="dialog-title">ANALYSIS RESULT</DialogTitle>
+  <DialogContent>
+    <Typography className="response">{response}</Typography>
+
+    <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', }}>
+      <Rating
+        name="product-rating"
+        value={rating}
+        max={5}
+        readOnly
+        precision={0.5}
+        size="large"
+        icon={<StarIcon style={{ fontSize: "4rem" }} />}
+        emptyIcon={<StarIcon style={{ fontSize: "4rem" }} />}
+        sx={{
+          "& .MuiRating-iconEmpty": {
+            color: "#edecf093",
+          },
+          "& .MuiRating-iconFilled": {
+            color: "#ffffff",
+          },
+        }}
+      />
+    </Box>
+  </DialogContent>
+  <DialogActions className="dialog-buttons">
+    <Button
+      onClick={() => setIsModalOpen(false)}
+      color="primary"
+      className="custom-button"
+    >
+      Close
+    </Button>
+    <Button onClick={handleRefresh} className="dialog-buttons">
+      Refresh
+    </Button>
+  </DialogActions>
+</Dialog>
       </ThemeProvider>
     </div>
   );
