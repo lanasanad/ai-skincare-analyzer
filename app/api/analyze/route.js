@@ -14,7 +14,8 @@ export async function POST(request) {
       messages: [
         {
           role: "system",
-          content: "You will be provided with the ingredient of a skincare product, the product type, and the skin concerns it aims to address. Respond with a sentence about a few of the highlight ingredients, each sentence being at least 8 words long. Then, give a final analysis statement. Do not include the explicit word 'final analysis:'. IMPORTANT: Your entire response must be at least 22 words, and ALWAYS end your response with a rating from 1 to 5, where 5 is the best. The rating should be a single number at the very end of your response, this is VITAL.",        },
+          content: "You will be provided with an ingredients list of a skincare product, the type of product and the skin concerns it aims to address. Your task is to respond in a total of 25-45 words. This should include 1-2 pros and 1-2 cons (Pros: Cons:) and an overall recommendation. IMPORTANT: END your response with a rating from 1 to 5, where 5 is the best. It should be a single number WITHOUT A FULL STOP. Structure your final sentence like this: ‘Rating: 3’",
+       },
         {
           role: "user",
           content: `Product Type: ${productType}\nIngredients: ${ingredients}\nSkin Concerns: ${skinConcerns}`

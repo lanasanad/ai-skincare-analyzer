@@ -338,8 +338,8 @@ function App() {
           PaperProps={{
             sx: {
               width: "900vw",
-              maxWidth: "800px",
-              height: "58vh",
+              maxWidth: "730px",
+              height: "62vh",
               backgroundColor: "#cabeca",
               borderRadius: "10px",
               padding: "10px",
@@ -353,16 +353,34 @@ function App() {
           >
             <Typography
               className="response"
-              sx={{ flexGrow: 1, whiteSpace: "pre-line", overflow: "auto" }}
+              sx={{
+                flexGrow: 1,
+                overflow: "auto",
+                lineHeight: 1.6,
+                marginTop: "50px",
+                "& p": {
+                  marginBottom: "1em",
+                },
+                "& p:last-child": {
+                  marginBottom: 0,
+                },
+                "& br": {
+                  display: "block",
+                  content: '""',
+                  marginTop: "0.5em",
+                },
+              }}
             >
-              {response}
+              {response.split("\n").map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
             </Typography>
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "center",
                 width: "100%",
-                mt: 2,
+                mb: 3,
               }}
             >
               <Rating
