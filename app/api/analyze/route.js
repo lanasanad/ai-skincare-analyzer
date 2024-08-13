@@ -27,8 +27,6 @@ export async function POST(request) {
     });
 
     const textResponse = response.choices[0].message.content.trim();
-    console.log("API response text:", textResponse);
-
     const ratingMatch = textResponse.match(/(\d+)$/);
     let rating = ratingMatch ? parseInt(ratingMatch[1], 10) : null;
     let cleanedResponse = textResponse.replace(/(\d+)$/, '').trim();
