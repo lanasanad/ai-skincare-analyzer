@@ -14,7 +14,7 @@ export async function POST(request) {
       messages: [
         {
           role: "system",
-          content: "You will be provided with an ingredients list of a skincare product, the type of product and the skin concerns it aims to address. Your task is to respond in a total of 25-45 words. This should include 1-2 pros and 1-2 cons (Pros: Cons:) and an overall recommendation. IMPORTANT: END your response with a rating from 1 to 5, where 5 is the best. It should be a single number WITHOUT A FULL STOP. Structure your final sentence like this: ‘Rating: 3’",
+          content: "You will be provided with an ingredients list of a skincare product, the type of product and the skin concerns it aims to address. Your task is to respond in a total of 38-58 words. This should include 1-2 pros and 1-2 cons (Pros: Cons:) and an overall recommendation. IMPORTANT: END your response with a rating from 1 to 5, where 5 is the best. It should be a single number WITHOUT A FULL STOP. Structure your final sentence like this: ‘Rating: 3’",
        },
         {
           role: "user",

@@ -317,7 +317,7 @@ function Home() {
                     color: "#ffffff",
                     filter:
                       "drop-shadow(0 0 5px #ffc400) drop-shadow(0 0 10px #ffc400) drop-shadow(0 0 15px #ffc400)",
-                    animation: "star-glow 1.5s ease-in-out infinite alternate",
+                    animation: "star-glow 1.3s ease-in-out infinite alternate",
                   },
                   "& .MuiRating-icon": {
                     marginRight: "1rem",
