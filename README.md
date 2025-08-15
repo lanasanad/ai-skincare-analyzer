@@ -1,4 +1,6 @@
 
 ## Glow AI
 
-A skincare analyzer which provides personalized reccomendations based on user inputs. https://www.glow-ai.site/
+A generative AI-powered web app that provides personalised skincare recommendations and star ratings based on ingredient lists, product types, and individual skin concerns.
+
+https://www.glow-ai.online/
