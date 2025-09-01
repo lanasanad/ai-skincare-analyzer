@@ -50,25 +50,17 @@ function Home() {
   }
 
   return (
-    <div
-      style={{
-        background: `url(spill1.jpg) repeat-x center center`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        width: "100%",
-        minHeight: "100vh",
-      }}
-    >
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <div className="hero">
         <Typography
           variant="h1"
+          className="red-hat-display"
           sx={{
             fontSize: { xs: "3rem", sm: "5rem", md: "6rem" },
-            textAlign: "center",
             fontWeight: 600,
           }}
         >
-          glow ai
+          GLOW AI
         </Typography>
 
         <Container>
@@ -81,6 +73,7 @@ function Home() {
               maxWidth: "800px",
               gap: 2,
               mx: "auto",
+              mt: 12,
             }}
           >
             <Box
@@ -195,11 +188,7 @@ function Home() {
               }
               disabled={isLoading}
             >
-              {isLoading ? (
-                <CircularProgress size={28} color="inherit" />
-              ) : (
-                "ANALYZE"
-              )}
+              {isLoading ? <CircularProgress size={28} color="inherit" /> : "ANALYZE"}
             </Button>
           </Box>
         </Container>
@@ -273,8 +262,8 @@ function Home() {
             </Button>
           </DialogActions>
         </Dialog>
-      </ThemeProvider>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 }
 

@@ -8,9 +8,19 @@ body, html {
     font-family: 'Red Hat Display', sans-serif;
     text-shadow: 0 0 3px #ffffff,0 0 8px #f7f3f3, 0 0 17px #f1ecec;
     font-size: 80px;
-    letter-spacing: 27px;
+    letter-spacing: 17px;
     word-spacing: 20px;
     text-align: center;
+}
+.hero {
+  background-image: url("/spill1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  width: 100%;
+  padding-top: 4rem;
+  box-sizing: border-box;
 }
 
 .textbox {
@@ -94,7 +104,7 @@ body, html {
     max-width: 250px;
     height: 60px;
     font-size: 20px;
-    margin-top: 2rem;
+    margin-top: 6rem;
 }
 
 .analyze-button:hover {
