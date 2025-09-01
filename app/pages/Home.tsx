@@ -52,27 +52,20 @@ function Home() {
   return (
     <div
       style={{
-        background: `url(spill1.jpg) repeat-x center center fixed`,
+        background: `url(spill1.jpg) repeat-x center center`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        width: "100vw",
-        height: "100vh",
-        overflow: "hidden",
+        width: "100%",
+        minHeight: "100vh",
       }}
     >
       <ThemeProvider theme={theme}>
         <Typography
-          marginTop="77px"
-          className="red-hat-display"
-          gutterBottom
-          fontSize="650%"
+          variant="h1"
           sx={{
-            fontWeight: "600",
-            display: "flex",
-            justifyContent: "center",
+            fontSize: { xs: "3rem", sm: "5rem", md: "6rem" },
             textAlign: "center",
-            letterSpacing: "27px",
-            wordSpacing: "20px",
+            fontWeight: 600,
           }}
         >
           glow ai
@@ -90,7 +83,6 @@ function Home() {
               mx: "auto",
             }}
           >
-            {/* Top 2 Textboxes */}
             <Box
               sx={{
                 display: "flex",
@@ -156,7 +148,6 @@ function Home() {
               />
             </Box>
 
-            {/* Ingredients Textbox */}
             <TextField
               fullWidth
               multiline
@@ -181,7 +172,6 @@ function Home() {
               }}
             />
 
-            {/* Analyze Button */}
             <Button
               className="analyze-button"
               sx={{
@@ -205,18 +195,21 @@ function Home() {
               }
               disabled={isLoading}
             >
-              {isLoading ? <CircularProgress size={28} color="inherit" /> : "ANALYZE"}
+              {isLoading ? (
+                <CircularProgress size={28} color="inherit" />
+              ) : (
+                "ANALYZE"
+              )}
             </Button>
           </Box>
         </Container>
 
-        {/* Modal Dialog */}
         <Dialog
           open={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           PaperProps={{
             sx: {
-              width: "900vw",
+              width: "90vw",
               maxWidth: "720px",
               height: "67vh",
               backgroundColor: "#cabeca",
@@ -246,35 +239,26 @@ function Home() {
               ))}
             </Typography>
 
-            <Box
+            <Rating
+              name="product-rating"
+              value={rating}
+              max={5}
+              readOnly
+              precision={0.5}
+              size="large"
+              icon={<StarIcon style={{ fontSize: "3.4rem" }} />}
+              emptyIcon={<StarIcon style={{ fontSize: "3.4rem" }} />}
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                width: "100%",
-                mb: 3,
+                "& .MuiRating-iconEmpty": { color: "#edecf093" },
+                "& .MuiRating-iconFilled": {
+                  color: "#ffffff",
+                  filter:
+                    "drop-shadow(0 0 5px #ffc400) drop-shadow(0 0 10px #ffc400) drop-shadow(0 0 15px #ffc400)",
+                  animation: "star-glow 1.3s ease-in-out infinite alternate",
+                },
+                "& .MuiRating-icon": { marginRight: "1rem" },
               }}
-            >
-              <Rating
-                name="product-rating"
-                value={rating}
-                max={5}
-                readOnly
-                precision={0.5}
-                size="large"
-                icon={<StarIcon style={{ fontSize: "3.4rem" }} />}
-                emptyIcon={<StarIcon style={{ fontSize: "3.4rem" }} />}
-                sx={{
-                  "& .MuiRating-iconEmpty": { color: "#edecf093" },
-                  "& .MuiRating-iconFilled": {
-                    color: "#ffffff",
-                    filter:
-                      "drop-shadow(0 0 5px #ffc400) drop-shadow(0 0 10px #ffc400) drop-shadow(0 0 15px #ffc400)",
-                    animation: "star-glow 1.3s ease-in-out infinite alternate",
-                  },
-                  "& .MuiRating-icon": { marginRight: "1rem" },
-                }}
-              />
-            </Box>
+            />
           </DialogContent>
           <DialogActions>
             <Button
