@@ -1,5 +1,4 @@
 import Home from "./pages/Home";
-
 export default function Page({
 }: {
   params: { slug: string }

@@ -5,6 +5,9 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Glow AI",
+  icons: {
+    icon: "/droplet.png",
+  },
 };
 
 export default function RootLayout({

@@ -61,194 +61,156 @@ function Home() {
       }}
     >
       <ThemeProvider theme={theme}>
-        <div>
-          <Typography
-            marginTop="77px"
-            className="red-hat-display"
-            gutterBottom
-            fontSize="650%"
+        <Typography
+          marginTop="77px"
+          className="red-hat-display"
+          gutterBottom
+          fontSize="650%"
+          sx={{
+            fontWeight: "600",
+            display: "flex",
+            justifyContent: "center",
+            textAlign: "center",
+            letterSpacing: "27px",
+            wordSpacing: "20px",
+          }}
+        >
+          glow ai
+        </Typography>
+
+        <Container>
+          <Box
             sx={{
-              fontWeight: "600",
               display: "flex",
-              justifyContent: "center",
-              textAlign: "center",
-              letterSpacing: "27px",
-              wordSpacing: "20px",
+              flexDirection: "column",
+              alignItems: "center",
+              width: "100%",
+              maxWidth: "800px",
+              gap: 2,
+              mx: "auto",
             }}
           >
-            GLOW AI
-          </Typography>
-          <Container>
+            {/* Top 2 Textboxes */}
             <Box
               sx={{
                 display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                gap: 2,
+                flexWrap: "wrap",
               }}
             >
-              <Box
+              <Autocomplete
+                value={productType}
+                onChange={(event, newValue) => setProductType(newValue)}
+                onInputChange={(event, newInputValue) =>
+                  setProductType(newInputValue)
+                }
+                options={productTypes}
+                freeSolo
                 sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  gap: 2,
-                  marginBottom: 2,
-                }}
-              >
-                <Autocomplete
-                  value={productType}
-                  onChange={(event, newValue) => setProductType(newValue)}
-                  onInputChange={(event, newInputValue) =>
-                    setProductType(newInputValue)
-                  }
-                  options={productTypes}
-                  freeSolo
-                  sx={{
-                    width: "393px",
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        borderWidth: "5px",
-                        borderColor: "#987998",
-                      },
-                      "&:hover fieldset": {
-                        borderColor: "#845584",
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: "#845584",
-                      },
-                    },
-                    "& .MuiInputLabel-root": {
-                      color: "#987998",
-                      "&.Mui-focused": {
-                        color: "#845584",
-                      },
-                    },
-                    "& .MuiInputLabel-shrink": {
-                      color: "#845584",
-                    },
-                    margin: "normal",
-                  }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Product Type"
-                      placeholder="Enter product type"
-                      variant="outlined"
-                      margin="normal"
-                    />
-                  )}
-                />
-
-                <TextField
-                  fullWidth
-                  label="Skin Concerns"
-                  variant="outlined"
-                  placeholder="Describe your skin concerns"
-                  margin="normal"
-                  className="text-field-outline"
-                  sx={{
-                    width: "390px",
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        borderWidth: "5px",
-                        borderColor: "#987998",
-                      },
-                      "&:hover fieldset": {
-                        borderColor: "#845584",
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: "#845584",
-                      },
-                    },
-                    "& .MuiInputLabel-root": {
-                      color: "#987998",
-                      "&.Mui-focused": {
-                        color: "#845584",
-                      },
-                    },
-                    "& .MuiInputLabel-shrink": {
-                      color: "#845584",
-                    },
-                  }}
-                  value={skinConcerns}
-                  onChange={(e) => setSkinConcerns(e.target.value)}
-                />
-              </Box >
-              <TextField
-                fullWidth
-                multiline
-                minRows={7}
-                maxRows={10}
-                label="Ingredients"
-                placeholder="Paste the ingredients list here"
-                variant="outlined"
-                margin="normal"
-                sx={{
-                  minHeight: '200px',
-                  width: "800px",
+                  flex: "1 1 48%",
+                  minWidth: "120px",
                   "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderWidth: "5px",
-                      borderColor: "#987998",
-                    },
-                    "&:hover fieldset": {
-                      borderColor: "#845584",
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#845584",
-                    },
+                    "& fieldset": { borderWidth: "5px", borderColor: "#987998" },
+                    "&:hover fieldset": { borderColor: "#845584" },
+                    "&.Mui-focused fieldset": { borderColor: "#845584" },
                   },
                   "& .MuiInputLabel-root": {
-                    height: '100%',
                     color: "#987998",
-                    "&.Mui-focused": {
-                      color: "#845584",
-                    },
+                    "&.Mui-focused": { color: "#845584" },
                   },
-                  "& .MuiInputLabel-shrink": {
-                    color: "#845584",
-                  },
+                  "& .MuiInputLabel-shrink": { color: "#845584" },
                 }}
-                value={ingredients}
-                onChange={(e) => setIngredients(e.target.value)}
-              />
-              <Button
-                variant="contained"
-                sx={{
-                  height: "60px",
-                  fontSize: "20px",
-                  padding: "2px 4px",
-                  mt: 10,
-                  textTransform: "none",
-                  width: "200px",
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": { borderWidth: "8px", color: "#dcd8d8" },
-                    "&:hover fieldset": { borderWidth: "2px" },
-                    "&.Mui-focused fieldset": { borderWidth: "2px" },
-                  },
-                }}
-                onClick={() =>
-                  analyzeIngredients(
-                    productType || "",
-                    ingredients,
-                    skinConcerns,
-                    setIsLoading,
-                    setResponse,
-                    setRating,
-                    setIsModalOpen
-                  )
-                }
-                disabled={isLoading}
-                className="analyze-button"
-              >
-                {isLoading ? (
-                  <CircularProgress size={28} color="inherit" />
-                ) : (
-                  "ANALYZE"
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Product Type"
+                    placeholder="Enter product type"
+                    variant="outlined"
+                    fullWidth
+                  />
                 )}
-              </Button>
+              />
+
+              <TextField
+                label="Skin Concerns"
+                variant="outlined"
+                placeholder="Describe your skin concerns"
+                value={skinConcerns}
+                onChange={(e) => setSkinConcerns(e.target.value)}
+                sx={{
+                  flex: "1 1 48%",
+                  minWidth: "120px",
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": { borderWidth: "5px", borderColor: "#987998" },
+                    "&:hover fieldset": { borderColor: "#845584" },
+                    "&.Mui-focused fieldset": { borderColor: "#845584" },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#987998",
+                    "&.Mui-focused": { color: "#845584" },
+                  },
+                  "& .MuiInputLabel-shrink": { color: "#845584" },
+                }}
+              />
             </Box>
-          </Container>
-        </div>
+
+            {/* Ingredients Textbox */}
+            <TextField
+              fullWidth
+              multiline
+              minRows={7}
+              maxRows={10}
+              label="Ingredients"
+              placeholder="Paste the ingredients list here"
+              variant="outlined"
+              value={ingredients}
+              onChange={(e) => setIngredients(e.target.value)}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": { borderWidth: "5px", borderColor: "#987998" },
+                  "&:hover fieldset": { borderColor: "#845584" },
+                  "&.Mui-focused fieldset": { borderColor: "#845584" },
+                },
+                "& .MuiInputLabel-root": {
+                  color: "#987998",
+                  "&.Mui-focused": { color: "#845584" },
+                },
+                "& .MuiInputLabel-shrink": { color: "#845584" },
+              }}
+            />
+
+            {/* Analyze Button */}
+            <Button
+              className="analyze-button"
+              sx={{
+                height: "60px",
+                fontSize: "20px",
+                padding: "2px 4px",
+                mt: 10,
+                textTransform: "none",
+                width: "200px",
+              }}
+              onClick={() =>
+                analyzeIngredients(
+                  productType || "",
+                  ingredients,
+                  skinConcerns,
+                  setIsLoading,
+                  setResponse,
+                  setRating,
+                  setIsModalOpen
+                )
+              }
+              disabled={isLoading}
+            >
+              {isLoading ? <CircularProgress size={28} color="inherit" /> : "ANALYZE"}
+            </Button>
+          </Box>
+        </Container>
+
+        {/* Modal Dialog */}
         <Dialog
           open={isModalOpen}
           onClose={() => setIsModalOpen(false)}
@@ -274,24 +236,16 @@ function Home() {
                 flexGrow: 1,
                 overflow: "auto",
                 lineHeight: 1.6,
-                marginTop: "50px",
-                "& p": {
-                  marginBottom: "1em",
-                },
-                "& p:last-child": {
-                  marginBottom: 0,
-                },
-                "& br": {
-                  display: "block",
-                  content: '""',
-                  marginTop: "0.5em",
-                },
+                "& p": { marginBottom: "1em" },
+                "& p:last-child": { marginBottom: 0 },
+                "& br": { display: "block", content: '""', marginTop: "0.5em" },
               }}
             >
               {response.split("\n").map((paragraph, index) => (
                 <p key={index}>{paragraph}</p>
               ))}
             </Typography>
+
             <Box
               sx={{
                 display: "flex",
@@ -310,23 +264,19 @@ function Home() {
                 icon={<StarIcon style={{ fontSize: "3.4rem" }} />}
                 emptyIcon={<StarIcon style={{ fontSize: "3.4rem" }} />}
                 sx={{
-                  "& .MuiRating-iconEmpty": {
-                    color: "#edecf093",
-                  },
+                  "& .MuiRating-iconEmpty": { color: "#edecf093" },
                   "& .MuiRating-iconFilled": {
                     color: "#ffffff",
                     filter:
                       "drop-shadow(0 0 5px #ffc400) drop-shadow(0 0 10px #ffc400) drop-shadow(0 0 15px #ffc400)",
                     animation: "star-glow 1.3s ease-in-out infinite alternate",
                   },
-                  "& .MuiRating-icon": {
-                    marginRight: "1rem",
-                  },
+                  "& .MuiRating-icon": { marginRight: "1rem" },
                 }}
               />
             </Box>
           </DialogContent>
-          <DialogActions className="dialog-buttons">
+          <DialogActions>
             <Button
               onClick={() => setIsModalOpen(false)}
               color="primary"
