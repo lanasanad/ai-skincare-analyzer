@@ -1,29 +1,46 @@
-export async function analyzeIngredients(productType: string, ingredients: string, skinConcerns: string, setIsLoading: (loading: boolean) => void, setResponse: (response: string) => void, setRating: (rating: number) => void, setIsModalOpen: (open: boolean) => void) {
-    
+export async function analyzeIngredients(
+  productType: string,
+  ingredients: string,
+  skinConcerns: string,
+  setIsLoading: (loading: boolean) => void,
+  setResponse: (response: string) => void,
+  setRating: (rating: number | null) => void,
+  setIsModalOpen: (open: boolean) => void
+) {
   setIsLoading(true);
+  setResponse("");
+  setRating(null);
 
-    try {
-      const apiResponse = await fetch("/api/analyze", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ productType, ingredients, skinConcerns }),
-      });
+  try {
+    const apiResponse = await fetch("/api/analyze", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ productType, ingredients, skinConcerns }),
+    });
 
-      if (!apiResponse.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const data = await apiResponse.json();
-      console.log("API Response:", data);
-      setResponse(data.response);
-      setRating(data.rating);
-    } catch (error) {
-      console.error("Error:", error);
-      setResponse("An error occurred while analyzing.");
-    } finally {
-      setIsLoading(false);
-      setIsModalOpen(true);
+    if (!apiResponse.ok) {
+      const errorData = await apiResponse.json();
+      throw new Error(errorData.error || "Unknown API error");
     }
+
+    const data = await apiResponse.json();
+    const textResponse = data.response || "";
+
+    const ratingMatch = textResponse.match(/Rating:\s*(\d+)/i);
+    const rating = ratingMatch ? parseInt(ratingMatch[1], 10) : null;
+
+    let cleanedResponse = textResponse.replace(/Rating:\s*\d+/i, "").trim();
+    cleanedResponse = cleanedResponse.split(". ").join(".\n\n");
+
+    setResponse(cleanedResponse);
+    setRating(rating ?? null);
+
+  } catch (error: any) {
+    console.error("Analyze error:", error);
+    setResponse(`An error occurred while analyzing: ${error.message}`);
+    setRating(null);
+  } finally {
+    setIsLoading(false);
+    setIsModalOpen(true);
   }
+}

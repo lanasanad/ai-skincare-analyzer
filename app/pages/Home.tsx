@@ -188,14 +188,17 @@ function Home() {
               }
               disabled={isLoading}
             >
-              {isLoading ? <CircularProgress size={28} color="inherit" /> : "ANALYZE"}
+              {isLoading ? <CircularProgress size={28} color="inherit" /> : "ANALYSE"}
             </Button>
           </Box>
         </Container>
 
         <Dialog
           open={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => {
+              setIngredients("");
+              setIsModalOpen(false);
+            }}
           PaperProps={{
             sx: {
               width: "90vw",
@@ -209,45 +212,34 @@ function Home() {
           }}
         >
           <DialogTitle className="dialog-title">ANALYSIS RESULT</DialogTitle>
-          <DialogContent
-            sx={{ display: "flex", flexDirection: "column", height: "100%" }}
-          >
-            <Typography
+          <DialogContent sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+            <Box
               className="response"
-              sx={{
-                flexGrow: 1,
-                overflow: "auto",
-                lineHeight: 1.6,
-                "& p": { marginBottom: "1em" },
-                "& p:last-child": { marginBottom: 0 },
-                "& br": { display: "block", content: '""', marginTop: "0.5em" },
-              }}
-            >
-              {response.split("\n").map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
-            </Typography>
-
-            <Rating
-              name="product-rating"
-              value={rating}
-              max={5}
-              readOnly
-              precision={0.5}
-              size="large"
-              icon={<StarIcon style={{ fontSize: "3.4rem" }} />}
-              emptyIcon={<StarIcon style={{ fontSize: "3.4rem" }} />}
-              sx={{
-                "& .MuiRating-iconEmpty": { color: "#edecf093" },
-                "& .MuiRating-iconFilled": {
-                  color: "#ffffff",
-                  filter:
-                    "drop-shadow(0 0 5px #ffc400) drop-shadow(0 0 10px #ffc400) drop-shadow(0 0 15px #ffc400)",
-                  animation: "star-glow 1.3s ease-in-out infinite alternate",
-                },
-                "& .MuiRating-icon": { marginRight: "1rem" },
-              }}
+              sx={{ flexGrow: 1, overflow: "auto" }}
+              dangerouslySetInnerHTML={{ __html: response }}
             />
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+              <Rating
+                name="product-rating"
+                value={rating}
+                max={5}
+                readOnly
+                precision={0.5}
+                size="large"
+                icon={<StarIcon style={{ fontSize: "3.6rem" }} />}
+                emptyIcon={<StarIcon style={{ fontSize: "3.6rem" }} />}
+                sx={{
+                  "& .MuiRating-iconEmpty": { color: "#edecf093" },
+                  "& .MuiRating-iconFilled": {
+                    color: "#ffffff",
+                    filter:
+                      "drop-shadow(0 0 5px #ffc400) drop-shadow(0 0 10px #ffc400) drop-shadow(0 0 15px #ffc400)",
+                    animation: "star-glow 1.3s ease-in-out infinite alternate",
+                  },
+                  "& .MuiRating-icon": { marginRight: "1rem" },
+                }}
+              />
+            </Box>
           </DialogContent>
           <DialogActions>
             <Button
@@ -262,6 +254,7 @@ function Home() {
             </Button>
           </DialogActions>
         </Dialog>
+
       </div>
     </ThemeProvider>
   );
