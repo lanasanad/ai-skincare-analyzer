@@ -176,4 +176,8 @@ body, html {
         max-width: none !important;
         overflow-x: hidden !important;
     }
+
+    .MuiRating-icon {
+        font-size: 2rem !important;
+    }
 }
