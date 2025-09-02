@@ -73,7 +73,7 @@ function Home() {
               maxWidth: "800px",
               gap: 2,
               mx: "auto",
-              mt: 12,
+              mt: { xs: 6, sm: 12 },
             }}
           >
             <Box
@@ -189,7 +189,7 @@ function Home() {
               }
               disabled={isLoading}
             >
-              {isLoading ? <CircularProgress size={28} color="inherit" /> : "ANALYSE"}
+              {isLoading ? <CircularProgress size={28} color="inherit" /> : "ANALYZE"}
             </Button>
           </Box>
         </Container>
