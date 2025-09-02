@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { productTypes } from "../client/constants";
 import { analyzeIngredients } from "../analysis/analyze";
 import "/app/page.css";
@@ -19,7 +19,6 @@ import {
   createTheme,
   Rating,
   ThemeProvider,
-  useMediaQuery,
 } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 
@@ -40,10 +39,6 @@ function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [rating, setRating] = useState<number | null>(null);
-
-  // Detect mobile screen size
-  const isMobile = useMediaQuery('(max-width:600px)');
-  const starSize = isMobile ? "2rem" : "3.6rem";
 
   function handleRefresh() {
     setProductType(null);
@@ -158,25 +153,15 @@ function Home() {
               onChange={(e) => setIngredients(e.target.value)}
               sx={{
                 "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderWidth: "5px",
-                    borderColor: "#987998",
-                  },
+                  "& fieldset": { borderWidth: "5px", borderColor: "#987998" },
                   "&:hover fieldset": { borderColor: "#845584" },
                   "&.Mui-focused fieldset": { borderColor: "#845584" },
                 },
                 "& .MuiInputLabel-root": {
                   color: "#987998",
-                  backgroundColor: "transparent",
-                  padding: "0 8px",
                   "&.Mui-focused": { color: "#845584" },
                 },
-                "& .MuiInputLabel-shrink": {
-                  color: "#845584",
-                  backgroundColor: "rgba(255, 255, 255, 0.9)",
-                  padding: "0 8px",
-                  transform: "translate(14px, -9px) scale(0.75)",
-                },
+                "& .MuiInputLabel-shrink": { color: "#845584" },
               }}
             />
 
@@ -234,6 +219,8 @@ function Home() {
               dangerouslySetInnerHTML={{ __html: response }}
             />
             <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+              // Replace the Rating component section with this responsive version:
+
               <Rating
                 name="product-rating"
                 value={rating}
@@ -241,8 +228,8 @@ function Home() {
                 readOnly
                 precision={0.5}
                 size="large"
-                icon={<StarIcon style={{ fontSize: starSize }} />}
-                emptyIcon={<StarIcon style={{ fontSize: starSize }} />}
+                icon={<StarIcon sx={{ fontSize: { xs: "1.8rem", sm: "2.4rem", md: "3.6rem" } }} />}
+                emptyIcon={<StarIcon sx={{ fontSize: { xs: "1.8rem", sm: "2.4rem", md: "3.6rem" } }} />}
                 sx={{
                   "& .MuiRating-iconEmpty": { color: "#edecf093" },
                   "& .MuiRating-iconFilled": {
@@ -251,7 +238,9 @@ function Home() {
                       "drop-shadow(0 0 5px #ffc400) drop-shadow(0 0 10px #ffc400) drop-shadow(0 0 15px #ffc400)",
                     animation: "star-glow 1.3s ease-in-out infinite alternate",
                   },
-                  "& .MuiRating-icon": { marginRight: "1rem" },
+                  "& .MuiRating-icon": {
+                    marginRight: { xs: "0.3rem", sm: "0.6rem", md: "1rem" }
+                  },
                 }}
               />
             </Box>
