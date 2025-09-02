@@ -124,7 +124,7 @@ body, html {
         letter-spacing: 12px;
         word-spacing: 8px;
         margin-top: 2.5rem;
-        margin-bottom: 0.8rem;
+        margin-bottom: 0.5rem !important;
     }
 
     .analyze-button {
