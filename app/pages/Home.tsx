@@ -151,9 +151,10 @@ function Home() {
               variant="outlined"
               value={ingredients}
               onChange={(e) => setIngredients(e.target.value)}
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": { borderWidth: "5px", borderColor: "#987998" },
+               sx={{
+                  mt: 2,
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": { borderWidth: "5px", borderColor: "#987998" },
                   "&:hover fieldset": { borderColor: "#845584" },
                   "&.Mui-focused fieldset": { borderColor: "#845584" },
                 },
@@ -205,9 +206,9 @@ function Home() {
               maxWidth: "720px",
               height: "67vh",
               backgroundColor: "#cabeca",
-              borderRadius: "10px",
-              padding: "10px",
-              boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+              borderRadius: "40px",
+              padding: "3px",
+              boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
             },
           }}
         >
@@ -216,7 +217,8 @@ function Home() {
             display: "flex",
             flexDirection: "column",
             height: "100%",
-            pb: 0
+            pb: 0,
+            overflow: "visible"
           }}>
             <Box
               className="response"
@@ -236,9 +238,10 @@ function Home() {
                 readOnly
                 precision={0.5}
                 size="large"
-                icon={<StarIcon sx={{ fontSize: { xs: "2rem", sm: "2.6rem", md: "3.8rem" } }} />}
-                emptyIcon={<StarIcon sx={{ fontSize: { xs: "1.8rem", sm: "2.4rem", md: "3.6rem" } }} />}
+                icon={<StarIcon sx={{ fontSize: { xs: "2.5rem", sm: "2.6rem", md: "3.8rem" } }} />}
+                emptyIcon={<StarIcon sx={{ fontSize: { xs: "2.3rem", sm: "2.4rem", md: "3.6rem" } }} />}
                 sx={{
+                  overflow: "visible",
                   "& .MuiRating-iconEmpty": { color: "#edecf093" },
                   "& .MuiRating-iconFilled": {
                     color: "#ffffff",
