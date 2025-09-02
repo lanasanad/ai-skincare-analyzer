@@ -73,7 +73,7 @@ function Home() {
               maxWidth: "800px",
               gap: 2,
               mx: "auto",
-              mt: { xs: 6, sm: 12 },
+              mt: { xs: 8, sm: 12 },
             }}
           >
             <Box
@@ -207,7 +207,7 @@ function Home() {
               height: "67vh",
               backgroundColor: "#cabeca",
               borderRadius: "40px",
-              padding: "3px",
+              padding: "5px",
               boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
             },
           }}
