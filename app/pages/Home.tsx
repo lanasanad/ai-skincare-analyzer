@@ -212,15 +212,23 @@ function Home() {
           }}
         >
           <DialogTitle className="dialog-title">ANALYSIS RESULT</DialogTitle>
-          <DialogContent sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+          <DialogContent sx={{
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+            pb: 0
+          }}>
             <Box
               className="response"
               sx={{ flexGrow: 1, overflow: "auto" }}
               dangerouslySetInnerHTML={{ __html: response }}
             />
-            <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-              // Replace the Rating component section with this responsive version:
-
+            <Box sx={{
+              display: "flex",
+              justifyContent: "center",
+              mt: 1,
+              mb: 0
+            }}>
               <Rating
                 name="product-rating"
                 value={rating}
@@ -228,7 +236,7 @@ function Home() {
                 readOnly
                 precision={0.5}
                 size="large"
-                icon={<StarIcon sx={{ fontSize: { xs: "1.8rem", sm: "2.4rem", md: "3.6rem" } }} />}
+                icon={<StarIcon sx={{ fontSize: { xs: "2rem", sm: "2.6rem", md: "3.8rem" } }} />}
                 emptyIcon={<StarIcon sx={{ fontSize: { xs: "1.8rem", sm: "2.4rem", md: "3.6rem" } }} />}
                 sx={{
                   "& .MuiRating-iconEmpty": { color: "#edecf093" },
@@ -245,7 +253,7 @@ function Home() {
               />
             </Box>
           </DialogContent>
-          <DialogActions>
+          <DialogActions sx={{ pt: 0 }}>
             <Button
               onClick={() => setIsModalOpen(false)}
               color="primary"
