@@ -189,7 +189,7 @@ function Home() {
               }
               disabled={isLoading}
             >
-              {isLoading ? <CircularProgress size={28} color="inherit" /> : "ANALYZE"}
+              {isLoading ? <CircularProgress size={28} color="inherit" /> : "ANALYSE"}
             </Button>
           </Box>
         </Container>

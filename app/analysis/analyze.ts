@@ -36,8 +36,8 @@ export async function analyzeIngredients(
     setRating(rating ?? null);
 
   } catch (error: any) {
-    console.error("Analyze error:", error);
-    setResponse(`An error occurred while analyzing: ${error.message}`);
+    console.error("Analyse error:", error);
+    setResponse(`An error occurred while analysing: ${error.message}`);
     setRating(null);
   } finally {
     setIsLoading(false);
