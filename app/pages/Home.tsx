@@ -60,7 +60,7 @@ function Home() {
             fontWeight: 600,
           }}
         >
-          GLOW AI
+           GLOW AI
         </Typography>
 
         <Container>
@@ -151,10 +151,10 @@ function Home() {
               variant="outlined"
               value={ingredients}
               onChange={(e) => setIngredients(e.target.value)}
-               sx={{
-                  mt: 2,
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": { borderWidth: "5px", borderColor: "#987998" },
+              sx={{
+                mt: 2,
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": { borderWidth: "5px", borderColor: "#987998" },
                   "&:hover fieldset": { borderColor: "#845584" },
                   "&.Mui-focused fieldset": { borderColor: "#845584" },
                 },
@@ -162,7 +162,9 @@ function Home() {
                   color: "#987998",
                   "&.Mui-focused": { color: "#845584" },
                 },
-                "& .MuiInputLabel-shrink": { color: "#845584" },
+                "& .MuiInputLabel-shrink": {
+                  color: "#845584",
+                },
               }}
             />
 

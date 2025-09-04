@@ -6,7 +6,12 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Glow AI",
   icons: {
-    icon: "/droplet.png",
+    icon: [
+      { url: "/droplet.png" },
+      { url: "16.png", sizes: "16x16" },
+      { url: "32.png", sizes: "32x32" },
+    ],
+    apple: "/apple-touch-icon.png",
   },
 };
 
