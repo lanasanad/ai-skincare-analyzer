@@ -27,8 +27,7 @@ Format your response like this:
 **Overall Recommendation:**
 [Your recommendation here]
 
-**Rating:**
-[your rating out of 5]
+**Rating:** [1-5 / 5]
 `;
 
     const result = await model.generateContent(prompt);
